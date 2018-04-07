@@ -55,7 +55,7 @@ Let createa 'fairly compelx' menu with 3 levels:
 ```
 
 lets make some calls:
-```bash
+```
 dadrian@ullr ~/git/necapy ● python test.py
 
 usage: Hype <command> [<args>]
@@ -69,7 +69,7 @@ test.py: error: the following arguments are required: command
 
 or
 
-```bash
+```
 dadrian@ullr ~/git/necapy ● python test.py train -m "blub" --dataset "Nanana batman" -mp '{"cool_json":1337}' 
 
 function train called with: {'e': 1000, 'cpu': False, 'model_params': {'cool_json': 1337}, 'dataset': 'Nanana batman', 'model': 'blub'}
@@ -77,7 +77,7 @@ function train called with: {'e': 1000, 'cpu': False, 'model_params': {'cool_jso
 
 or
 
-```bash
+```
 dadrian@ullr ~/git/necapy ● python test.py train -h
 
 usage: test.py [-h] [--model MODEL] [--dataset DATASET]
@@ -99,7 +99,7 @@ optional arguments:
 
 or
 
-```bash
+```
 dadrian@ullr ~/git/necapy ● python test.py list datasets -h 
 
 usage: test.py [-h] [--model MODEL] [--dataset DATASET]
