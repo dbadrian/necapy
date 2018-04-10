@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='necapy',
-      version='0.1',
+      version='0.1.0',
       description='Nested command-line arguments made easy.',
       url='https://github.com/dbadrian/necapy',
       author='David B. Adrian',
