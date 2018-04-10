@@ -1,21 +1,31 @@
 from __future__ import print_function
+
 import argparse
 import inspect
 import sys
 
+
 class necapy(object):
-    def __init__(self, name, desc):
+    def __init__(self, name, desc, max_name_length=15):
         self.name = name
         self.desc = desc
 
-        self.max_name_length = 15
-
-        # make a property
-        self.exit_error_message = "Unrecognized command."
+        self._max_name_length = max_name_length
 
         self.cmd_list = []
         self.cmd2func = {}
         self.cmd2cmds = {}
+
+    @property
+    def max_name_length(self):
+        return self._max_name_length
+
+    @max_name_length.setter
+    def max_name_length(self, max_name_length):
+        if max_name_length < 1:
+            raise ValueError("Minimum name length is 1!")
+        self._max_name_length = max_name_length
+
 
     def parse(self, args=None):
         usage = self.__generate_usage_string()
@@ -28,7 +38,7 @@ class necapy(object):
         cmd_args = args if args is not None else sys.argv[1:]
         args = parser.parse_args(cmd_args[0:1])
         if args.command not in self.cmd2func:
-            print('Unrecognized command')
+            print("'{}': unrecognized command. Exiting.".format(args.command))
             parser.print_help()
             exit(1)
         else:
