@@ -10,9 +10,9 @@ You can add two types:
   * Argparse-menu (leaf node)
 
 ## Example
-An example says a thousand words, thus lets create a trivial example with 3 levels. 
+An example says a thousand words -> Let's create a trivial example with 3 levels of hierarchy. 
 
-Let's assume we are building a program train some machine learning model, which has three modes: **train**, **test**, and **list**.
+Let's assume we are building a program to train some machine learning model, which has three modes: **train**, **test**, and **list**.
 Train and test have no further subarguments, where list has two modes: **datasets** and **models**.
 
 ```python
