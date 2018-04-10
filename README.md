@@ -81,28 +81,6 @@ function train called with: {'e': 1000, 'cpu': False, 'model_params': {'cool_jso
 or
 
 ```
-dadrian@ullr ~/git/necapy ● python test.py train -h
-
-usage: test.py [-h] [--model MODEL] [--dataset DATASET]
-               [--model_params MODEL_PARAMS] [--cpu] [-e E]
-
-Train a model (new or continue from checkpoint)
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --model MODEL, -m MODEL
-                        Name of model.
-  --dataset DATASET, -d DATASET
-                        Name of dataset.
-  --model_params MODEL_PARAMS, -mp MODEL_PARAMS
-                        Model parameters as dict (json-formatted)
-  --cpu                 Use CPU only.
-  -e E                  Run for #e epochs.
-```
-
-or
-
-```
 dadrian@ullr ~/git/necapy ● python test.py list datasets -h 
 
 usage: test.py [-h] [--model MODEL] [--dataset DATASET]
