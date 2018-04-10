@@ -1,7 +1,7 @@
+from __future__ import print_function
 import argparse
 import inspect
 import sys
-
 
 class necapy(object):
     def __init__(self, name, desc):
