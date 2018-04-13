@@ -6,26 +6,13 @@ import sys
 
 
 class necapy(object):
-    def __init__(self, name, desc, max_name_length=15):
+    def __init__(self, name, desc):
         self.name = name
         self.desc = desc
-
-        self._max_name_length = max_name_length
 
         self.cmd_list = []
         self.cmd2func = {}
         self.cmd2cmds = {}
-
-    @property
-    def max_name_length(self):
-        return self._max_name_length
-
-    @max_name_length.setter
-    def max_name_length(self, max_name_length):
-        if max_name_length < 1:
-            raise ValueError("Minimum name length is 1!")
-        self._max_name_length = max_name_length
-
 
     def parse(self, args=None):
         usage = self.__generate_usage_string()
@@ -86,8 +73,9 @@ class necapy(object):
     def __generate_usage_string(self):
         usage = "{} <command> [<args>]\n\n" \
                 "Available commands:\n".format(self.name)
+        max_name_length = len(max(self.cmd_list, key=lambda x: len(x[0]))[0])
         for name, desc in self.cmd_list:
-            name_spacing = " " * (self.max_name_length - len(name))
+            name_spacing = " " * (max_name_length - len(name)) + " " * 5
             usage += "   {}{}{}\n".format(name, name_spacing, desc)
 
         return usage

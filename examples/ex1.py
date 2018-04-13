@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # L0 (main): 1st cmd (train)
     train_cmd = menu.add_command(name="train",
-                                 desc="Train a model (new or continue from checkpoint",
+                                 desc="Train a model (new or continue from checkpoint)",
                                  func=train)
     # L1 (train): add bunch of args
     train_cmd.add_argument('--model', '-m', type=str, default="ComplEx",
