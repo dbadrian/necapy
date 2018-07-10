@@ -1,8 +1,11 @@
 import unittest
 import types
+import os
+import sys
 
-from context import necapy
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+import necapy
 
 class TestBasicSetup(unittest.TestCase):
     def setUp(self):

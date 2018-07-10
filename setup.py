@@ -1,8 +1,15 @@
 from setuptools import setup
 
+try:
+    import pypandoc
+    long_description = pypandoc.convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_description = open('README.md').read()
+
 setup(name='necapy',
-    version='0.1.0',
+    version='0.1.3',
     description='Nested command-line arguments made easy.',
+    long_description = long_description,
     url='https://github.com/dbadrian/necapy',
     author='David B. Adrian',
     author_email='dawidh.adrian@googlemail.com',
@@ -29,4 +36,6 @@ setup(name='necapy',
         'Source': 'https://github.com/dbadrian/necapy',
         'Tracker': 'https://github.com/dbadrian/necapy/issues',
     },
-    zip_safe=False)
+    zip_safe=False,
+    test_suite="tests",
+    )
