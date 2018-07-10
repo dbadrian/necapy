@@ -5,6 +5,7 @@ import inspect
 import sys
 
 
+
 class necapy(object):
     def __init__(self, name, desc):
         self.name = name
@@ -12,7 +13,6 @@ class necapy(object):
 
         self.cmd_list = []
         self.cmd2func = {}
-        self.cmd2cmds = {}
 
     def parse(self, args=None):
         usage = self.__generate_usage_string()
@@ -57,8 +57,11 @@ class necapy(object):
             assert callable(func)
 
         def wrap_argparse(parser, args, func):
+            """Convenience function calls argparse with list of args and calls func with them"""
             pargs = parser.parse_args(args)
             return func(**vars(pargs))
+
+        assert name not in self.cmd2func, "Command with same name already defined on this level!"
 
         self.cmd_list.append((name, desc))
         if func is None:
@@ -71,6 +74,7 @@ class necapy(object):
             return ap
 
     def __generate_usage_string(self):
+        """Internal function to print available commands"""
         usage = "{} <command> [<args>]\n\n" \
                 "Available commands:\n".format(self.name)
         max_name_length = len(max(self.cmd_list, key=lambda x: len(x[0]))[0])

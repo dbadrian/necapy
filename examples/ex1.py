@@ -9,21 +9,22 @@ def train(model, dataset, model_params, cpu, e):
 def test():
     print("function <test> called with:", locals())
 
-def list_d(dataset, model_params, cpu, e):
-    print("function <list_d> called with:", locals())
+def list_datasets(dataset, model_params, cpu, e):
+    print("function <list_datasets> called with:", locals())
 
-def list_m(model, model_params):
-    print("function <list_m> called with:", locals())
+def list_models(model, model_params):
+    print("function <list_models> called with:", locals())
 
 if __name__ == "__main__":
     # create menu: base level (L0), a cmd-type
-    menu = necapy(name='Hype', desc="Learning KG embeddings easily.")
+    menu = necapy(name='Example', desc="Train and test a machine learning model.")
 
-    # L0 (main): 1st cmd (train)
+    # Level 0 (main): 1st cmd (train)
     train_cmd = menu.add_command(name="train",
                                  desc="Train a model (new or continue from checkpoint)",
                                  func=train)
-    # L1 (train): add bunch of args
+
+    # Level 0 (train): add bunch of args
     train_cmd.add_argument('--model', '-m', type=str, default="ComplEx",
                            help="Name of model.")
     train_cmd.add_argument('--dataset', '-d', type=str, default="FB20K",
@@ -35,24 +36,24 @@ if __name__ == "__main__":
     train_cmd.add_argument('-e', type=int, default=1000,
                            help="Run for #e epochs.")
 
-    # L0 (main): 2nd cmd
-    test_cmd = menu.add_command("list", "List available models and datasets", func=None)
+    # Level 0 (main): 2nd cmd
+    test_cmd = menu.add_command("test", "Test a model", func=None)
 
-    # L0 (main): 3rd cmd
+    # Level 0 (main): 3rd cmd
     list_cmd = menu.add_command("list", "List available models and datasets",
                                 func=None)
-    # L1 (list): add bunch of cmds
+    # Level 1 (list): add bunch of cmds
     list_models = list_cmd.add_command("models", "List available models",
-                                       func=list_m)
+                                       func=list_models)
     list_models.add_argument('--model', '-m', type=str, default="ComplEx",
                                help="Name of model.")
     list_models.add_argument('--model_params', '-mp', type=json.loads,
                                default="{}",
                                help="Model parameters as dict (json-formatted)")
     list_datasets = list_cmd.add_command("datasets", "List available datasets",
-                                         func=list_d)
+                                         func=list_datasets)
 
-    # L2 (list_datasets): add bunch of cmds
+    # Level 2 (list_datasets): add bunch of cmds
     list_datasets.add_argument('--dataset', '-d', type=str, default="FB20K",
                                help="Name of dataset.")
     list_datasets.add_argument('--model_params', '-mp', type=json.loads,
