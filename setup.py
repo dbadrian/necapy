@@ -7,7 +7,7 @@ except(IOError, ImportError):
     long_description = open('README.md').read()
 
 setup(name='necapy',
-    version='0.1.3',
+    version='0.1.4',
     description='Nested command-line arguments made easy.',
     long_description = long_description,
     url='https://github.com/dbadrian/necapy',

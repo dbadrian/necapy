@@ -7,9 +7,10 @@ import sys
 
 
 class necapy(object):
-    def __init__(self, name, desc):
+    def __init__(self, name, desc, split_args=True):
         self.name = name
         self.desc = desc
+        self.split_args = split_args
 
         self.cmd_list = []
         self.cmd2func = {}
@@ -41,10 +42,10 @@ class necapy(object):
             if self.cmd2func[
                 args.command].__name__ == 'parse' and inspect.ismethod(
                 self.cmd2func[args.command]):
-                self.cmd2func[args.command](cmd_args[1:])
+                return self.cmd2func[args.command](cmd_args[1:])
             else:
                 # raise NotImplementedError("Call the argparse wrapper")
-                self.cmd2func[args.command](cmd_args[1:])
+                return self.cmd2func[args.command](cmd_args[1:])
 
         #   then make a function wrapper
         # otherwise directly call the function without args, but assert if args were given anyway better assert.
@@ -56,21 +57,24 @@ class necapy(object):
         if func is not None:
             assert callable(func)
 
-        def wrap_argparse(parser, args, func):
+        def wrap_argparse(parser, args, func, split_args):
             """Convenience function calls argparse with list of args and calls func with them"""
             pargs = parser.parse_args(args)
-            return func(**vars(pargs))
+            if split_args:
+                return func(**vars(pargs))
+            else:
+                return func(pargs)
 
         assert name not in self.cmd2func, "Command with same name already defined on this level!"
 
         self.cmd_list.append((name, desc))
         if func is None:
-            m = necapy(name=name, desc=desc)
+            m = necapy(name=name, desc=desc, split_args=self.split_args)
             self.cmd2func[name] = m.parse
             return m
         else:
             ap = argparse.ArgumentParser(description=desc)
-            self.cmd2func[name] = lambda args: wrap_argparse(ap, args, func)
+            self.cmd2func[name] = lambda args: wrap_argparse(ap, args, func, self.split_args)
             return ap
 
     def __generate_usage_string(self):

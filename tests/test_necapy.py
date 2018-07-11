@@ -66,6 +66,58 @@ class TestNestedMenu(unittest.TestCase):
         # Not really what we really want to test, but for now, thats how it is
         self.assertIs(type(self.menu.cmd2func["train"]), types.LambdaType)
 
+# class TestManualArgs(unittest.TestCase):
+#     def test_manual_args(self):
+#         pass
+
+class TestSplitArgs(unittest.TestCase):
+    def test_no_split_args(self):
+        def dummy(args):
+            return args
+
+        self.menu = necapy.necapy(name='', desc='', split_args=False)
+
+        c = self.menu.add_command(name="train",
+                                  desc="Train a model (new or continue from checkpoint)",
+                                  func=dummy)
+        c.add_argument('--model', '-m', type=str, default="ComplEx", help="Name of model.")
+        c.add_argument('--dataset', '-d', type=str, default="FB20K", help="Name of dataset.")
+
+        ret = self.menu.parse(['train', '-m', 'ModelTest', '-d', 'DatasetTest'])
+        self.assertEqual(ret.model, 'ModelTest')
+        self.assertEqual(ret.dataset, 'DatasetTest')
+
+
+    def test_split_args(self):
+        def dummy(model, dataset):
+            return (model, dataset)
+
+        self.menu = necapy.necapy(name='Example',
+                                  desc="Train and test a machine learning model.", split_args=True)
+
+        c = self.menu.add_command(name="train",
+                                  desc="Train a model (new or continue from checkpoint)",
+                                  func=dummy)
+        c.add_argument('--model', '-m', type=str, default="ComplEx", help="Name of model.")
+        c.add_argument('--dataset', '-d', type=str, default="FB20K", help="Name of dataset.")
+
+        ret = self.menu.parse(['train', '-m', 'ModelTest', '-d', 'DatasetTest'])
+        self.assertEqual(ret, ('ModelTest', 'DatasetTest'))
+
+    def test_split_args_missing(self):
+        def dummy(model, dataset, asd):
+            return (model, dataset)
+
+        self.menu = necapy.necapy(name='Example',
+                                  desc="Train and test a machine learning model.", split_args=True)
+
+        c = self.menu.add_command(name="train",
+                                  desc="Train a model (new or continue from checkpoint)",
+                                  func=dummy)
+        c.add_argument('--model', '-m', type=str, default="ComplEx", help="Name of model.")
+        c.add_argument('--dataset', '-d', type=str, default="FB20K", help="Name of dataset.")
+
+        self.assertRaises(TypeError, self.menu.parse, args=['train', '-m', 'ModelTest', '-d', 'DatasetTest'])
 
 if __name__ == '__main__':
     unittest.main()
