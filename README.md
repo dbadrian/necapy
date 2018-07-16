@@ -1,3 +1,5 @@
+Notice: This is a project of mine to test some aspects of python, pypi, and others. Just use argparse/subparsers and for the most part, you will be fine! :)
+
 # necapy
 **NE**sted **C**ommand-line **A**rguments for **PY**thon is a tiny class allowing the quick creation of nested commandline-args/menu.
 
